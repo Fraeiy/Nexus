@@ -1,0 +1,20 @@
+name: Deploy Nexus
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: Build and Deploy
+      run: |
+        cargo build --release
+        ssh user@your-server "cd /path/to/nexus && git pull && cargo run"
